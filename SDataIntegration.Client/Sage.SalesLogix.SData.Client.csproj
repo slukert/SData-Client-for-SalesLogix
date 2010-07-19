@@ -39,10 +39,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\inetpub\wwwroot\SlxClient\Bin\Sage.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Sage.SData.Client, Version=1.1.0.1323, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\slx\SageScottsdalePlatform-SDataCSharpClientLib-1.1@770-0-g660ce28\SageScottsdalePlatform-SDataCSharpClientLib-c6a2a1d\Sage.SData.Client\bin\Debug\Sage.SData.Client.dll</HintPath>
-    </Reference>
+    <Reference Include="Sage.SData.Client, Version=1.1.0.1323, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,6 +58,9 @@
     <Compile Include="ClientContext.cs" />
     <Compile Include="ClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sage.SData.Client.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
