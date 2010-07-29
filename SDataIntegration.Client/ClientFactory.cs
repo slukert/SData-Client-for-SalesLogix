@@ -8,13 +8,15 @@ using System.CodeDom;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Diagnostics;
 
 namespace Sage.SalesLogix.SData.Client
 {
-    public static class ClientFactory
-    {
-        public static bool OutputGeneratedClass;
-
+    /// <summary>
+    /// The Client Factory is an internal class that creates the wrappers for SData to Entity.Interfaces dynamically.
+    /// </summary>
+    internal static class ClientFactory
+    {        
         internal static Type GenerateProxyClass(Type interfaceType)
         {
             CodeCompileUnit compileUnit = new CodeCompileUnit();
@@ -58,7 +60,7 @@ namespace Sage.SalesLogix.SData.Client
                 GenerateMethodCode(typeDeclatation, method);
 
 
-            if (OutputGeneratedClass)
+            if (Debugger.IsAttached)
                 OutputGeneratedCode(compileUnit);
 
             return CompileCode(compileUnit);
@@ -75,7 +77,7 @@ namespace Sage.SalesLogix.SData.Client
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(currentBinLocation, "Sage.Entity.Interfaces.dll"));
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(currentBinLocation, "Sage.Platform.dll"));
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(currentBinLocation, "Sage.SData.Client.dll"));
-
+            
             CompilerResults result = codeProvider.CompileAssemblyFromDom(compilerParameters, compileUnit);
 
             if (result.Errors.Count > 0)
@@ -102,7 +104,7 @@ namespace Sage.SalesLogix.SData.Client
                 {
                     string ouptut = reader.ReadToEnd();
 
-                    Console.WriteLine(ouptut);
+                    Trace.WriteLine(ouptut);
                 }
             }
         }

@@ -57,6 +57,10 @@
     <Compile Include="ClientEntityBase.cs" />
     <Compile Include="ClientContext.cs" />
     <Compile Include="ClientFactory.cs" />
+    <Compile Include="Linq\SDataQuery.cs" />
+    <Compile Include="Linq\SDataQueryProvider.cs" />
+    <Compile Include="Linq\SDataRequest.cs" />
+    <Compile Include="Linq\SDataTranslator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

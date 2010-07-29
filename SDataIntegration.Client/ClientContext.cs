@@ -7,9 +7,13 @@ using Sage.SData.Client.Atom;
 using Sage.SData.Client.Core;
 using Sage.Platform.Orm.Attributes;
 using System.Collections;
+using Sage.SalesLogix.SData.Client.Linq;
 
 namespace Sage.SalesLogix.SData.Client
 {
+    /// <summary>
+    /// Public context to access sdata in a strongly typed manner. The context offers both, linq functionality and retrieving items using direct methods.
+    /// </summary>
     public class ClientContext : IDisposable
     {
         private string _Servername;
@@ -112,7 +116,7 @@ namespace Sage.SalesLogix.SData.Client
 
             request.ResourceKind = GetResourceKind(interfaceClass);
 
-            request.Entry = LoadByIdInternal(interfaceClass, entity.Id.ToString(), null);      
+            request.Entry = LoadByIdInternal(interfaceClass, entity.Id.ToString(), null);
             request.Entry.SetSDataPayload(entity._Payload);
             request.ResourceSelector = String.Format("('{0}')", entity.Id);
 
@@ -132,11 +136,40 @@ namespace Sage.SalesLogix.SData.Client
 
         private static int bulkSize = 100;
 
+        private string GetResourceKind(Type type)
+        {
+            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
+
+            if (attributes.Length > 0)
+                return GetPlural(((ActiveRecordAttribute)attributes[0]).Table);
+
+            throw new InvalidOperationException(String.Format("Type {0} does not contain a valid SalesLogix Table-Attribute", type.FullName));
+        }
+
+        /// <summary>
+        /// This is stupid! The plural from used for sdata should be in an attribute of the interface
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string GetPlural(string name)
+        {
+            name = name.ToLowerInvariant().Trim();
+
+            if (name.EndsWith("y"))
+                return name.Substring(0, name.Length - 1) + "ies";
+
+            if (name.EndsWith("s"))
+                return name;
+
+            return name + "s";
+        }
+
+        #region Public methods to retrieve Entities
+
         public T LoadById<T>(string id)
         {
             return LoadById<T>(id, null);
         }
-
 
         private AtomEntry LoadByIdInternal(Type type, string id, string include)
         {
@@ -165,8 +198,6 @@ namespace Sage.SalesLogix.SData.Client
         {
             SDataResourceCollectionRequest request = new SDataResourceCollectionRequest(Service);
 
-            request.ResourceKind = GetResourceKind(typeof(T));
-
             if (!String.IsNullOrEmpty(filter))
                 request.QueryValues.Add("where", filter);
 
@@ -176,11 +207,18 @@ namespace Sage.SalesLogix.SData.Client
             if (!String.IsNullOrEmpty(orderBy))
                 request.QueryValues.Add("orderby", orderBy);
 
-            //One request will only return 100 rows, no matter what you do. So this logic repeats the request, until all items are returned.
+            return Load<T>(request);
+        }
 
-            //Set the max-rowcount the the limit of 100 to make sure this code works, even if the limit is removed
-            request.Count = bulkSize;
-            request.StartIndex = 0;
+        public ICollection<T> Load<T>(SDataResourceCollectionRequest request)
+        {
+            int rowsToRead = request.Count;
+
+            request.ResourceKind = GetResourceKind(typeof(T));
+           
+            //One request will only return 100 rows, no matter what you do. So this logic repeats the request, until all items are returned.                    
+            
+            request.StartIndex = 1;
 
             bool moreRows = true;
 
@@ -188,11 +226,18 @@ namespace Sage.SalesLogix.SData.Client
 
             while (moreRows)
             {
+                //Set the max-rowcount the the limit of 100 to make sure this code works, even if the limit is removed            
+                if (rowsToRead > -1)
+                    request.Count = Math.Min(rowsToRead, bulkSize);
+                else
+                    request.Count = bulkSize;
+
                 ICollection<T> tempList = GetProxyClients<T>(request.Read());
 
-                moreRows = tempList.Count == bulkSize;
+                rowsToRead -= tempList.Count;
+                moreRows = tempList.Count == bulkSize && rowsToRead != 0;
                 request.StartIndex += bulkSize;
-
+                
                 result.AddRange(tempList);
             }
 
@@ -224,7 +269,7 @@ namespace Sage.SalesLogix.SData.Client
             SDataTemplateResourceRequest request = new SDataTemplateResourceRequest(Service);
 
             request.ResourceKind = GetResourceKind(typeof(T));
-            
+
             return this.GetProxyClient<T>(request.Read());
         }
 
@@ -246,32 +291,16 @@ namespace Sage.SalesLogix.SData.Client
             return GetProxyClient<T>(request.Create());
         }
 
-        private string GetResourceKind(Type type)
-        {
-            object[] attributes = type.GetCustomAttributes(typeof(ActiveRecordAttribute), false);
-
-            if (attributes.Length > 0)
-                return GetPlural(((ActiveRecordAttribute)attributes[0]).Table);
-
-            throw new InvalidOperationException(String.Format("Type {0} does not contain a valid SalesLogix Table-Attribute", type.FullName));
-        }
+        #endregion
 
         /// <summary>
-        /// This is stupid! The plural from used for sdata should be in an attribute of the interface
+        /// Creates a linq Query that can be used to consume SData information
         /// </summary>
-        /// <param name="name"></param>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private string GetPlural(string name)
+        public IQueryable<T> CreateQuery<T>()
         {
-            name = name.ToLowerInvariant().Trim();
-
-            if (name.EndsWith("y"))
-                return name.Substring(0, name.Length - 1) + "ies";
-
-            if (name.EndsWith("s"))
-                return name;
-
-            return name + "s";
+            return new SDataQuery<T>(this);
         }
     }
 }

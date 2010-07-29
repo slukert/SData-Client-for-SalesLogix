@@ -9,6 +9,10 @@ using System.Globalization;
 
 namespace Sage.SalesLogix.SData.Client
 {
+
+    /// <summary>
+    /// Base class for all dynamically generated wrappers
+    /// </summary>
     public abstract class ClientEntityBase
     {
         internal protected SDataPayload _Payload;
