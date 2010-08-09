@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Sage.SData.Client.Core;
 using System.Collections;
 
-namespace Sage.SalesLogix.SData.Client.Linq
+namespace Sage.SalesLogix.Client.SData.Linq
 {
     /// <summary>
     /// This class translates Linq expressions into SData requests
@@ -216,8 +216,8 @@ namespace Sage.SalesLogix.SData.Client.Linq
                         return String.Format("replace({0}, {1}, {2})", TranslateConditionExpression(methodCallExpression.Object), TranslateConditionExpression(methodCallExpression.Arguments[0]), TranslateConditionExpression(methodCallExpression.Arguments[1]), true);
 
                     if (methodCallExpression.Method.Name == "In" &&
-                        methodCallExpression.Method.DeclaringType == typeof(SDataQueryExtensions))
-                    {                                                                       
+                        methodCallExpression.Method.DeclaringType == typeof(QueryExtensions))
+                    {
                         return String.Format("({0} in ({1}))", TranslateConditionExpression(methodCallExpression.Arguments[1]), GetCurrentInCondition((IEnumerable)(Expression.Lambda(methodCallExpression.Arguments[0]).Compile().DynamicInvoke())));
                     }
 
@@ -255,12 +255,19 @@ namespace Sage.SalesLogix.SData.Client.Linq
                 case ExpressionType.MemberAccess:
                     MemberExpression memberExpression = (MemberExpression)expression;
 
-                    if (memberExpression.Member.Name == "Length" &&
-                        memberExpression.Member.DeclaringType == typeof(String))
-                        return String.Format("length({0})", TranslateConditionExpression(memberExpression.Expression));
+                    if (ContainsParameterExpression(memberExpression))
+                    {
+                        if (memberExpression.Member.Name == "Length" &&
+                            memberExpression.Member.DeclaringType == typeof(String))
+                            return String.Format("length({0})", TranslateConditionExpression(memberExpression.Expression));
 
-                    if (memberExpression.Expression.NodeType == ExpressionType.Parameter)
-                        return memberExpression.Member.Name;
+                        if (memberExpression.Expression.NodeType == ExpressionType.MemberAccess)                     
+                            return String.Format("{0}.{1}", TranslateConditionExpression(memberExpression.Expression), memberExpression.Member.Name);
+                        
+
+                        if (memberExpression.Expression.NodeType == ExpressionType.Parameter)
+                            return memberExpression.Member.Name;
+                    }
 
                     break;
                 case ExpressionType.MemberInit:
@@ -339,6 +346,26 @@ namespace Sage.SalesLogix.SData.Client.Linq
             }
         }
 
+        private bool ContainsParameterExpression(Expression expression)
+        {
+
+            {
+                MemberExpression memberExpression = expression as MemberExpression;
+
+                if (memberExpression != null)
+                    return ContainsParameterExpression(memberExpression.Expression);
+            }
+
+            {
+                ParameterExpression parameterExpression = expression as ParameterExpression;
+
+                if (parameterExpression != null)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Returns the current values for an in-statement. In case of large lists, multiple requests have to be made in order not to create too long uris.
         /// </summary>
@@ -350,7 +377,7 @@ namespace Sage.SalesLogix.SData.Client.Linq
             List<object> inStatementItems = new List<object>();
 
             foreach (object item in items)
-                inStatementItems.Add(item);;
+                inStatementItems.Add(item); ;
 
             if (inStatementItems.Count > 50)
             {
@@ -425,7 +452,7 @@ namespace Sage.SalesLogix.SData.Client.Linq
 
                 if (date == DateTime.MinValue)
                     return "null";
-                
+
                 return String.Format("@{0:yyyy-MM-ddTHH:mm:ss}@", date);
             }
 

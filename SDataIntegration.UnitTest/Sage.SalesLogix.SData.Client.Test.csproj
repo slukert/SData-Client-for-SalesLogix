@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,9 +59,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDataIntegration.Client\Sage.SalesLogix.SData.Client.csproj">
+    <ProjectReference Include="..\Sage.SalesLogix.Client.Hibernate.Context\Sage.SalesLogix.Client.Hibernate.Context.csproj">
+      <Project>{25B002F0-8FD1-4D60-8443-4D2981F46A61}</Project>
+      <Name>Sage.SalesLogix.Client.Hibernate.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sage.SalesLogix.Client.Hibernate\Sage.SalesLogix.Client.Hibernate.csproj">
+      <Project>{3C265F5D-98C3-48EC-B677-3C78B48BF1C7}</Project>
+      <Name>Sage.SalesLogix.Client.Hibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sage.SalesLogix.Client\Sage.SalesLogix.Client.csproj">
+      <Project>{4023D0D4-D9FA-43F7-A745-83B92641596B}</Project>
+      <Name>Sage.SalesLogix.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDataIntegration.Client\Sage.SalesLogix.Client.SData.csproj">
       <Project>{942DBC5A-5FFF-4DEA-94F3-68656275251F}</Project>
-      <Name>Sage.SalesLogix.SData.Client</Name>
+      <Name>Sage.SalesLogix.Client.SData</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -71,4 +84,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\Sage.SalesLogix.Client.Hibernate.Context\bin\Debug\*.dll" "*.dll" /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

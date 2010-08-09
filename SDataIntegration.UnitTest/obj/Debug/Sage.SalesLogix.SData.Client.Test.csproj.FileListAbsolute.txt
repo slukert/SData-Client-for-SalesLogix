@@ -38,7 +38,6 @@ C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integrat
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.SData.Client.Test.pdb
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Entity.Interfaces.dll
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Platform.dll
-C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.SData.Client.dll
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Integration.Server.Model.dll
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\log4net.dll
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Platform.Configuration.dll
@@ -64,5 +63,18 @@ C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integrat
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Integration.Client.dll
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SData.Client.pdb
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SData.Client.xml
-C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.SData.Client.pdb
 C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.SData.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.SData.pdb
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.pdb
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.Hibernate.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.Hibernate.pdb
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.Hibernate.Context.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Security.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.Common.Syndication.Json.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Interop.SLXSystem.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Security.Entities.dll
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Security.Entities.pdb
+C:\Users\slukert\Documents\Visual Studio 2008\Projects\SalesLogix.SData.Integration\SDataIntegration.UnitTest\bin\Debug\Sage.SalesLogix.Client.Hibernate.Context.pdb

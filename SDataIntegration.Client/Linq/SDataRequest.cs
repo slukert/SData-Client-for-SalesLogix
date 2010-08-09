@@ -5,7 +5,7 @@ using System.Text;
 using Sage.SData.Client.Core;
 using System.Linq.Expressions;
 
-namespace Sage.SalesLogix.SData.Client.Linq
+namespace Sage.SalesLogix.Client.SData.Linq
 {
     internal class SDataRequest
     {
@@ -14,17 +14,6 @@ namespace Sage.SalesLogix.SData.Client.Linq
         internal List<LambdaExpression> ProjectionExpressions { get; private set; }
 
         private List<Delegate> ProjectionDelegates { get; set; }
-
-        internal Type RequestBaseType
-        {
-            get
-            {
-                if (ProjectionExpressions.Count == 0)
-                    return null;
-
-                return ProjectionExpressions[0].Parameters[0].Type;
-            }
-        }
 
         internal T PerformSelect<T>(object item)
         {
